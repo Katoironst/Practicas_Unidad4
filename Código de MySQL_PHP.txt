@@ -1,0 +1,62 @@
+//--------------------------------------------------ALTAS------------------------------------------------//
+
+<?php
+ include 'conectaBD.php' ;
+// $sql = "INSERT INTO alumnos (nControl, nombre, carrera, semestre) VALUES ('21590048','Montserrat', 'Sistemas', '4')";
+$codigo = S_POST['nControl'];
+$nombre = S_POST['nombre'];
+$carrera = S_POST['carrera'];
+$semestre = S_POST['semestre']; 
+
+//$codigo = "21590088";
+//$nombre = "Emiliano";
+//$carrera = "Sistemas";
+//$semestre = "4";
+//echo "INSERT INTO alumnos (nControl, nombre, carrera, semestre) VALUES ( '$codigo' ,'$nombre','$carrera','$semestre')";
+
+//$codigo = "21590049";
+//$nombre = "Leonardo";
+//$carrera = "Sistemas";
+//$semestre = "4";
+//echo "INSERT INTO alumnos (nControl, nombre, carrera, semestre) VALUES ( '$codigo' ,'$nombre','$carrera','$semestre')";
+
+$sql = "INSERT INTO alumnos (nControl, nombre, carrera, semestre) VALUES ( '$codigo' ,'$nombre','$carrera','$semestre')";
+mysqli_query($conn,$sql) or die (mysqli_error());
+mysqli_close($conn); 
+?>
+
+//--------------------------------------------------BUSCAR------------------------------------------------//
+
+<?php
+ include 'conectaBD.php' ;
+$nControl = $_GET['nControl'];
+//$nControl = "21590088";
+$consulta = "SELECT * FROM alumnos WHERE nControl = '$nControl'";
+$resultado = $conn ->query($consulta);
+while($fila = $resultado -> fetch_array()){
+    $producto[] = array_map('utf8_encode', $fila);
+}
+ echo json_encode($producto);
+ $resultado-> close();
+
+?>
+
+//--------------------------------------------------CONECTAR------------------------------------------------//
+
+<?php
+$servername = "localhost";
+$database = "prueba";
+$username = "root";
+$password = "root";
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $database);
+// Check connection
+if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+}
+else{
+   echo "Connected successfully";
+ }
+ 
+
+?>
